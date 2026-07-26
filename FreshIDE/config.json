@@ -1,0 +1,57 @@
+{
+  "theme": "yellow.json",
+  "plugins": {
+    "dashboard": {
+      "settings": {
+        "autoOpen": true
+      }
+    }
+  },
+  "editor": {
+    "relative_line_numbers": false,
+    "cursor_style": "blinking_bar",
+    "highlight_matching_brackets": true,
+    "highlight_current_column": true,
+    "mouse_hover_enabled": true,
+    "screensaver_enabled": false,
+    "completion_popup_auto_show": true,
+    "auto_save_enabled": true,
+    "confirm_quit": true,
+    "show_horizontal_scrollbar": true,
+    "trim_trailing_whitespace_on_save": true,
+    "use_tabs": true,
+    "default_line_ending": "crlf",
+    "whitespace_spaces_inner": true,
+    "whitespace_spaces_trailing": true,
+    "diagnostics_inline_text": true,
+    "whitespace_spaces_leading": true,
+    "use_terminal_bg": false,
+    "set_window_title": false,
+    "ensure_final_newline_on_save": true,
+    "status_bar": {
+      "left": [
+        "{filename}"
+      ],
+      "right": [
+        "{messages}",
+        "{update}",
+        "{encoding}",
+        "{language}",
+        "{clock}"
+      ]
+    }
+  },
+  "file_browser": {
+    "show_hidden": true
+  },
+  "file_explorer": {
+    "show_hidden": true,
+    "custom_ignore_patterns": [
+      ".pdf",
+      ".aux",
+      ".log"
+    ],
+    "follow_active_buffer": true
+  },
+  "default_language": "latex"
+}
