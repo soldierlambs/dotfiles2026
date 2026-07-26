@@ -5,30 +5,23 @@ local config = wezterm.config_builder()
 config.exit_behavior = "Close"
 
 -- === Performance ===
-config.front_end = "OpenGL"
-config.max_fps = 25
-config.animation_fps = 20
+config.front_end = "WebGpu"
+config.max_fps = 60
+config.animation_fps = 60
 config.cursor_blink_rate = 5000
 config.term = "xterm-256color"
 
--- === Background (UNCHANGED) ===
-config.background = {
-  {
-    source = {
-      File = "C:/Program Files/WezTerm/sunflower.jpg"
-    },
-    opacity = 0.2,
-  },
-}
-
 -- === Font ===
-config.font = wezterm.font({ family = "GoMono Nerd Font Mono", weight = "Bold" })
+config.font = wezterm.font_with_fallback({
+  "ComicShannsMono Nerd Font Mono",
+  "ComicShannsMono Nerd Font",
+  "Consolas",
+})
 config.font_size = 10.0
 
 -- === Appearance ===
 config.window_background_opacity = 0.9
-config.prefer_egl = true
-config.win32_system_backdrop = 'Acrylic'
+config.win32_system_backdrop = "Acrylic"
 
 config.window_padding = {
   left = 6,
@@ -37,19 +30,20 @@ config.window_padding = {
   bottom = 6,
 }
 
--- === 🌻 SAME SYSTEM (BRIGHTER ONLY) ===
-local mid_gold   = "#ffcc00"
-local light_gold = "#fff1b3"
+config.hide_mouse_cursor_when_typing = true
+config.adjust_window_size_when_changing_font_size = false
 
--- BRIGHTENED (was too dark for Emacs/menu readability)
-local soft_gold  = "#d4ad00"  -- brighter than #caa100, same role
+-- === Colors ===
+local mid_gold = "#ffcc00"
+local light_gold = "#fff1b3"
+local soft_gold = "#d4ad00"
 
 config.colors = {
   foreground = soft_gold,
   background = "#fff9e6",
 
   cursor_bg = mid_gold,
-  cursor_fg = soft_gold,
+  cursor_fg = "#000000",
   cursor_border = mid_gold,
 
   selection_fg = soft_gold,
@@ -58,7 +52,6 @@ config.colors = {
   scrollbar_thumb = mid_gold,
   split = mid_gold,
 
-  -- SAME STRUCTURE, ONLY LIGHTENED LOW END
   ansi = {
     soft_gold,
     mid_gold,
@@ -81,7 +74,9 @@ config.colors = {
     "#ffffff",
   },
 
-  indexed = { [136] = mid_gold },
+  indexed = {
+    [136] = mid_gold,
+  },
 
   compose_cursor = mid_gold,
 
@@ -96,24 +91,27 @@ config.colors = {
   quick_select_match_fg = { Color = soft_gold },
 }
 
--- === Tabs removed ===
+-- === Tabs ===
 config.enable_tab_bar = false
+config.use_fancy_tab_bar = false
 
--- === Window frame ===
+-- === Window Frame ===
 config.window_frame = {
   active_titlebar_bg = mid_gold,
   inactive_titlebar_bg = "#d9a300",
 }
 
--- === Window Decorations toggle ===
-config.window_decorations = "NONE | RESIZE"
+-- === Window Decorations ===
+config.window_decorations = "RESIZE"
 
 wezterm.on("toggle-window-decoration", function(window, _)
   local overrides = window:get_config_overrides() or {}
+
   overrides.window_decorations =
-    (overrides.window_decorations == "NONE | RESIZE")
-      and "TITLEBAR | RESIZE"
-      or "NONE | RESIZE"
+    overrides.window_decorations == "RESIZE"
+      and "TITLE | RESIZE"
+      or "RESIZE"
+
   window:set_config_overrides(overrides)
 end)
 
@@ -128,35 +126,74 @@ config.keys = {
   {
     key = "h",
     mods = "CTRL|SHIFT|ALT",
-    action = act.SplitPane({ direction = "Right", size = { Percent = 50 } }),
+    action = act.SplitPane({
+      direction = "Right",
+      size = { Percent = 50 },
+    }),
   },
+
   {
     key = "v",
     mods = "CTRL|SHIFT|ALT",
-    action = act.SplitPane({ direction = "Up", size = { Percent = 50 } }),
+    action = act.SplitPane({
+      direction = "Up",
+      size = { Percent = 50 },
+    }),
   },
 
-  { key = "U", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
-  { key = "I", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Down", 5 }) },
-  { key = "O", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Up", 5 }) },
-  { key = "P", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
+  {
+    key = "U",
+    mods = "CTRL|SHIFT",
+    action = act.AdjustPaneSize({ "Left", 5 }),
+  },
 
-  { key = "9", mods = "CTRL", action = act.PaneSelect },
-  { key = "L", mods = "CTRL", action = act.ShowDebugOverlay },
+  {
+    key = "I",
+    mods = "CTRL|SHIFT",
+    action = act.AdjustPaneSize({ "Down", 5 }),
+  },
+
+  {
+    key = "O",
+    mods = "CTRL|SHIFT",
+    action = act.AdjustPaneSize({ "Up", 5 }),
+  },
+
+  {
+    key = "P",
+    mods = "CTRL|SHIFT",
+    action = act.AdjustPaneSize({ "Right", 5 }),
+  },
+
+  {
+    key = "9",
+    mods = "CTRL",
+    action = act.PaneSelect,
+  },
+
+  {
+    key = "L",
+    mods = "CTRL",
+    action = act.ShowDebugOverlay,
+  },
 
   {
     key = "O",
     mods = "CTRL|ALT",
     action = wezterm.action_callback(function(window, _)
       local overrides = window:get_config_overrides() or {}
+
       overrides.window_background_opacity =
-        (overrides.window_background_opacity == 1.0) and 0.9 or 1.0
+        (overrides.window_background_opacity == 1.0)
+          and 0.9
+          or 1.0
+
       window:set_config_overrides(overrides)
     end),
   },
 }
 
--- === Default shell ===
+-- === Default Shell ===
 config.default_prog = { "powershell.exe", "-NoLogo" }
 config.initial_cols = 80
 
