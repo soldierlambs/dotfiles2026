@@ -1,12 +1,19 @@
 # ===== Powershell Profile ====
-z ~\scoop
 Set-PsReadlineKeyHandler -Key Tab -Function MenuComplete
 Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # === Functions ===
 
-function ezai {
+function reload {
+$tmppwd = $pwd
+cd ~
+cd .\Documents\WindowsPowerShell
+.\Microsoft.PowerShell_profile.ps1
+cd $tmppwd
+}
+
+function lsi {
 eza --icons
 }
 
@@ -15,4 +22,3 @@ fzf --preview 'bat --style=numbers --color=always --theme="ansi" --line-range=:5
 }
 
 # === Import Modules ===
-
