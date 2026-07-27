@@ -1,9 +1,7 @@
 # ===== Powershell Profile ====
-
-fastfetch
-
+z ~\scoop
 Set-PsReadlineKeyHandler -Key Tab -Function MenuComplete
-Invoke-Expression (&starship init powershell --print-full-init)
+Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # === Functions ===
@@ -17,4 +15,4 @@ fzf --preview 'bat --style=numbers --color=always --theme="ansi" --line-range=:5
 }
 
 # === Import Modules ===
-Import-Module PSScriptAnalyzer
+
