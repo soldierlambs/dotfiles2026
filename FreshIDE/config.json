@@ -3,13 +3,13 @@
   "plugins": {
     "dashboard": {
       "settings": {
-        "autoOpen": true
+        "autoOpen": false
       }
     }
   },
   "editor": {
     "relative_line_numbers": false,
-    "cursor_style": "blinking_bar",
+    "cursor_style": "blinking_block",
     "highlight_matching_brackets": true,
     "highlight_current_column": true,
     "mouse_hover_enabled": true,
