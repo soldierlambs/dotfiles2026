@@ -177,6 +177,8 @@ end)
 -- Keybinds
 -- ======================================================
 
+config.disable_default_key_bindings = true
+
 config.keys = {
 
 	------------------------------------------------------
@@ -188,6 +190,47 @@ config.keys = {
 		mods = "ALT",
 		action = act.EmitEvent("toggle-window-decoration"),
 	},
+
+    {
+        key = "PageUp",
+        mods = "CTRL|ALT",
+        action = act.ActivateTabRelative(1),  -- Move to the next tab
+    },
+
+
+    {
+        key = "PageDown",
+        mods = "CTRL|ALT",
+        action = act.ActivateTabRelative(-1), -- Move to the previous tab
+    },
+
+   -- Increase font size with CTRL + +
+    {
+        key = "=",
+        mods = "CTRL",
+        action = act.IncreaseFontSize,
+    },
+
+    -- Decrease font size with CTRL + -
+    {
+        key = "-",
+        mods = "CTRL",
+        action = act.DecreaseFontSize,
+    },
+
+    -- Reset font size with CTRL + 0
+
+    {
+        key = "0",
+        mods = "CTRL",
+        action = act.ResetFontSize,
+    },
+
+    {
+        key = "N",
+        mods = "ALT",
+        action = act.SpawnTab("CurrentPaneDomain"),
+    },
 
 	------------------------------------------------------
 	-- Opacity
