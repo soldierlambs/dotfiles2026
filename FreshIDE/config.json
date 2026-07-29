@@ -3,13 +3,13 @@
   "plugins": {
     "dashboard": {
       "settings": {
-        "autoOpen": false
+        "autoOpen": true
       }
     }
   },
   "editor": {
     "relative_line_numbers": false,
-    "cursor_style": "blinking_block",
+    "cursor_style": "blinking_bar",
     "highlight_matching_brackets": true,
     "highlight_current_column": true,
     "mouse_hover_enabled": true,
@@ -53,5 +53,49 @@
     ],
     "follow_active_buffer": true
   },
-  "default_language": "latex"
+  "default_language": "latex",
+  "keybindings": [
+    {
+      "key": "F2",
+      "action": "noop",
+      "when": "normal"
+    },
+    {
+      "key": "F2",
+      "action": "orchestrator_dock_toggle",
+      "when": "global"
+    },
+    {
+      "key": "o",
+      "modifiers": [
+        "alt"
+      ],
+      "action": "noop",
+      "when": "fileExplorer"
+    },
+    {
+      "key": "o",
+      "modifiers": [
+        "alt"
+      ],
+      "action": "noop",
+      "when": "dock"
+    },
+    {
+      "key": "o",
+      "modifiers": [
+        "alt"
+      ],
+      "action": "noop",
+      "when": "terminal"
+    },
+    {
+      "key": "o",
+      "modifiers": [
+        "alt"
+      ],
+      "action": "toggle_dock_focus",
+      "when": "global"
+    }
+  ]
 }
