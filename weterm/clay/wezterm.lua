@@ -276,7 +276,7 @@ config.keys = {
 
 	{
 		key = "V",
-		mods = "CTRL|SHIFT",
+		mods = "CTRL|ALT",
 		action = act.SplitPane({
 			direction = "Right",
 			size = {
@@ -287,7 +287,7 @@ config.keys = {
 
 	{
 		key = "H",
-		mods = "CTRL|SHIFT",
+		mods = "CTRL|ALT",
 		action = act.SplitPane({
 			direction = "Down",
 			size = {
