@@ -55,7 +55,7 @@ config.window_frame = {
 	inactive_titlebar_bg = "#62564D",
 }
 
-config.window_decorations = "RESIZE"
+config.window_decorations = "TITLE | RESIZE"
 
 -- ======================================================
 -- Colors
@@ -187,7 +187,7 @@ config.keys = {
 
 	{
 		key = "T",
-		mods = "ALT",
+		mods = "SHIFT|ALT",
 		action = act.EmitEvent("toggle-window-decoration"),
 	},
 
@@ -398,17 +398,19 @@ config.keys = {
 -- ======================================================
 
 if is_windows then
-	config.default_prog = {
-		"powershell.exe",
-		"-NoLogo",
-		"-NoExit",
-		"-Command",
-		[[fastfetch --config "$env:USERPROFILE\.config\fastfetch\config.jsonc" --logo-type file-raw --logo "$env:USERPROFILE\.config\fastfetch\logo.txt"]],
-	}
+    config.default_prog = {
+        "powershell.exe",
+        "-NoLogo",
+        "-NoExit",
+        "-Command",
+        [[fastfetch --config "$env:USERPROFILE\.config\fastfetch\config.jsonc" --logo-type file-raw --logo "$env:USERPROFILE\.config\fastfetch\logo.txt"]],
+    }
 else
-	config.default_prog = {
-		"fish",
-	}
+    config.default_prog = {
+        "fish",
+        "-C",
+        "fastfetch; exec fish",
+    }
 end
 
 return config
